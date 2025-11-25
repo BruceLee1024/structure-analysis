@@ -1,12 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 结构大师 - 智能结构求解器
 
-# Run and deploy your AI Studio app
+基于矩阵位移法的 2D 结构分析工具，支持多种结构类型的参数化建模和有限元分析。
 
-This contains everything you need to run your app locally.
+## ⚠️ 免责声明
 
-View your app in AI Studio: https://ai.studio/apps/drive/1Biqu3XtT6LAVO4tt59c8IYj3Pa5kGdW0
+**本项目仅供参考、学习使用，不可用于实际工程项目设计。**
+
+## 在线演示
+
+访问：https://brucelee1024.github.io/structure-analysis/
+
+## 功能特点
+
+- 🏗️ 多种结构类型：门式刚架、悬臂刚架、人字形刚架、多层框架、桁架等
+- 📐 参数化建模：通过滑块快速调整结构尺寸和材料参数
+- 🔧 自定义编辑：节点、单元、荷载的可视化编辑
+- 📊 实时分析：矩阵位移法求解，显示弯矩图、剪力图和变形
+- 🎨 现代界面：深色主题，响应式设计
 
 ## Run Locally
 
