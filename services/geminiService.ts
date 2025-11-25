@@ -2,10 +2,13 @@
 import { GoogleGenAI } from "@google/genai";
 import { AnalysisResult } from '../types';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 // Using 'any' temporarily to accept the new structure shape without breaking interface strictness immediately
-export const analyzeStructure = async (params: any, results: AnalysisResult): Promise<string> => {
+export const analyzeStructure = async (params: any, results: AnalysisResult, apiKey: string): Promise<string> => {
+  if (!apiKey) {
+    return "⚠️ 请先设置 Gemini API Key";
+  }
+  
+  const ai = new GoogleGenAI({ apiKey });
   const modelName = 'gemini-2.5-flash';
   
   const maxMoment = results.elements.reduce((max, el) => Math.max(max, el.maxMoment), 0);

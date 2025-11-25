@@ -8,9 +8,11 @@ interface ControlPanelProps {
   onAnalyze: () => void;
   isAnalyzing: boolean;
   onClearLoads: () => void;
+  apiKey: string;
+  setApiKey: (key: string) => void;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onAnalyze, isAnalyzing, onClearLoads }) => {
+const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onAnalyze, isAnalyzing, onClearLoads, apiKey, setApiKey }) => {
 
   const handleChange = (key: keyof SolverParams, value: any) => {
     setParams(prev => ({ ...prev, [key]: value }));
@@ -479,6 +481,21 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onAnalyz
             className="w-full accent-emerald-500 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer"
           />
         </div>
+      </div>
+
+      {/* API Key Input */}
+      <div className="space-y-2">
+        <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gemini API Key</label>
+        <input
+          type="password"
+          value={apiKey}
+          onChange={(e) => setApiKey(e.target.value)}
+          placeholder="输入你的 Gemini API Key"
+          className="w-full bg-slate-800 text-slate-200 text-sm rounded p-2 border border-slate-700 focus:ring-1 focus:ring-indigo-500 outline-none placeholder-slate-500"
+        />
+        <p className="text-[10px] text-slate-500">
+          获取 API Key: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 underline">Google AI Studio</a>
+        </p>
       </div>
 
       <div className="pt-4">

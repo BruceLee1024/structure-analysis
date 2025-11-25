@@ -93,10 +93,23 @@ const App: React.FC = () => {
   }, [params.nodes, params.elements, params.loads, params.stiffnessType]);
 
   // 4. AI Integration
+  const [apiKey, setApiKey] = useState<string>(localStorage.getItem('gemini_api_key') || "");
   const [aiAnalysis, setAiAnalysis] = useState<string>("");
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
 
+  // Save API Key to localStorage when it changes
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem('gemini_api_key', apiKey);
+    }
+  }, [apiKey]);
+
   const handleGeminiAnalysis = async () => {
+    if (!apiKey) {
+      setAiAnalysis("⚠️ 请先设置 Gemini API Key");
+      return;
+    }
+    
     setIsAnalyzing(true);
     
     const aiParams = {
@@ -106,7 +119,7 @@ const App: React.FC = () => {
         maxDeflection: results.maxDeflection
     };
     
-    const result = await analyzeStructure(aiParams, results);
+    const result = await analyzeStructure(aiParams, results, apiKey);
     setAiAnalysis(result);
     setIsAnalyzing(false);
   };
@@ -134,6 +147,8 @@ const App: React.FC = () => {
         onAnalyze={handleGeminiAnalysis} 
         isAnalyzing={isAnalyzing}
         onClearLoads={handleClearLoads}
+        apiKey={apiKey}
+        setApiKey={setApiKey}
       />
 
       {/* Center: Viewport */}
