@@ -479,7 +479,13 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onClearL
         </div>
       </div>
 
-      <div className="pt-4">
+      <div className="pt-4 space-y-3">
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
+            <p className="text-[10px] text-amber-400 leading-relaxed text-center">
+              ⚠️ 本项目仅供参考、学习使用<br/>
+              不可用于实际工程项目设计
+            </p>
+        </div>
         <div className="text-center">
             <p className="text-[10px] text-slate-600 font-mono tracking-wider">
                 工程设计 Engineer
