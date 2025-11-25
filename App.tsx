@@ -4,9 +4,7 @@ import StructureVisualizer from './components/BeamVisualizer';
 import GeometryEditor from './components/GeometryEditor';
 import { SolverParams, StructureType, AnalysisResult, Load } from './types';
 import { solveStructure } from './utils/solver';
-import { analyzeStructure } from './services/geminiService';
 import { generateGeometry } from './utils/geometryGenerator';
-import ReactMarkdown from 'react-markdown';
 
 const App: React.FC = () => {
   // Initial Geometry Setup
@@ -92,37 +90,7 @@ const App: React.FC = () => {
       return solveStructure(params.nodes, params.elements, params.loads, params.stiffnessType);
   }, [params.nodes, params.elements, params.loads, params.stiffnessType]);
 
-  // 4. AI Integration
-  const [apiKey, setApiKey] = useState<string>(localStorage.getItem('gemini_api_key') || "");
-  const [aiAnalysis, setAiAnalysis] = useState<string>("");
-  const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
-
-  // Save API Key to localStorage when it changes
-  useEffect(() => {
-    if (apiKey) {
-      localStorage.setItem('gemini_api_key', apiKey);
-    }
-  }, [apiKey]);
-
-  const handleGeminiAnalysis = async () => {
-    if (!apiKey) {
-      setAiAnalysis("⚠️ 请先设置 Gemini API Key");
-      return;
-    }
-    
-    setIsAnalyzing(true);
-    
-    const aiParams = {
-        type: params.structureType,
-        maxMoment: results.elements.reduce((max, el) => Math.max(max, el.maxMoment), 0),
-        maxShear: results.elements.reduce((max, el) => Math.max(max, el.maxShear), 0),
-        maxDeflection: results.maxDeflection
-    };
-    
-    const result = await analyzeStructure(aiParams, results, apiKey);
-    setAiAnalysis(result);
-    setIsAnalyzing(false);
-  };
+  // AI功能已移除
 
   const handleAddLoad = (load: Load) => {
       setParams(prev => ({
@@ -143,12 +111,8 @@ const App: React.FC = () => {
       {/* Left Sidebar: Global Controls */}
       <ControlPanel 
         params={params} 
-        setParams={setParams} 
-        onAnalyze={handleGeminiAnalysis} 
-        isAnalyzing={isAnalyzing}
+        setParams={setParams}
         onClearLoads={handleClearLoads}
-        apiKey={apiKey}
-        setApiKey={setApiKey}
       />
 
       {/* Center: Viewport */}
@@ -167,17 +131,6 @@ const App: React.FC = () => {
             />
         </div>
 
-        {aiAnalysis && (
-            <div className="mt-4 bg-slate-900 rounded-xl border border-slate-700 p-6 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2 relative z-10">
-                    <span className="text-xl">✨</span> AI 结构点评
-                </h3>
-                <div className="prose prose-invert prose-sm max-w-none relative z-10">
-                    <ReactMarkdown>{aiAnalysis}</ReactMarkdown>
-                </div>
-            </div>
-        )}
       </main>
 
       {/* Right Sidebar: Geometry Editor */}

@@ -5,14 +5,10 @@ import { SolverParams, StructureType, Load, StiffnessType } from '../types';
 interface ControlPanelProps {
   params: SolverParams;
   setParams: React.Dispatch<React.SetStateAction<SolverParams>>;
-  onAnalyze: () => void;
-  isAnalyzing: boolean;
   onClearLoads: () => void;
-  apiKey: string;
-  setApiKey: (key: string) => void;
 }
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onAnalyze, isAnalyzing, onClearLoads, apiKey, setApiKey }) => {
+const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onClearLoads }) => {
 
   const handleChange = (key: keyof SolverParams, value: any) => {
     setParams(prev => ({ ...prev, [key]: value }));
@@ -483,35 +479,8 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ params, setParams, onAnalyz
         </div>
       </div>
 
-      {/* API Key Input */}
-      <div className="space-y-2">
-        <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gemini API Key</label>
-        <input
-          type="password"
-          value={apiKey}
-          onChange={(e) => setApiKey(e.target.value)}
-          placeholder="输入你的 Gemini API Key"
-          className="w-full bg-slate-800 text-slate-200 text-sm rounded p-2 border border-slate-700 focus:ring-1 focus:ring-indigo-500 outline-none placeholder-slate-500"
-        />
-        <p className="text-[10px] text-slate-500">
-          获取 API Key: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 underline">Google AI Studio</a>
-        </p>
-      </div>
-
       <div className="pt-4">
-        <button 
-            onClick={onAnalyze}
-            disabled={isAnalyzing}
-            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-medium py-3 rounded-lg shadow-lg shadow-blue-900/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-        >
-           {isAnalyzing ? (
-             <span>计算中...</span>
-           ) : (
-             <span>✨ AI 结构点评</span>
-           )}
-        </button>
-
-        <div className="mt-4 text-center">
+        <div className="text-center">
             <p className="text-[10px] text-slate-600 font-mono tracking-wider">
                 工程设计 Engineer
             </p>
