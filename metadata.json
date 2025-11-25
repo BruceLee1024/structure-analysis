@@ -1,0 +1,5 @@
+{
+  "name": "结构大师 - 智能结构求解器",
+  "description": "一个实时的参数化结构分析工具。支持矩阵位移法求解静定和超静定结构。集成Gemini AI进行智能结构分析与点评。",
+  "requestFramePermissions": []
+}
